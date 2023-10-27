@@ -1,5 +1,19 @@
 import urllib.request as urllib2
 from bs4 import BeautifulSoup
+from nltk.sentiment import SentimentIntensityAnalyzer
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import config
+# import nltk
+# nltk.download('punkt')
+# nltk.download('vader_lexicon')
+# nltk.download('stopwords')
+
+# client = MongoClient()
+# Provide the connection details
+mydict = {"name": "John", "address": "Highway 37"}
+x = config.collection.insert_one(mydict)
+# print(x.inserted_id)
 
 keyword = "bca"
 # html = urllib2.urlopen("https://search.kompas.com/search/?q=BCA&submit=Submit#gsc.tab=0&gsc.q=BCA&gsc.sort=date").read()
@@ -15,7 +29,7 @@ soup = BeautifulSoup(news_search, "lxml")
 
 ###
 news_list = soup.find_all("article")
-print(len(news_list))
+# print(len(news_list))
 # print(news_list[0])
 for news in news_list:
     # link = BeautifulSoup(news, "lxml")
@@ -24,15 +38,21 @@ for news in news_list:
     # print(news.find('a').get_text())
     link = news.find('a', href=True)['href']
     title = news.find("h2", "title").get_text()
-    print("link: " + link)
+    print("\nlink: " + link)
     print("title: " + title)
     news_html = urllib2.urlopen(link).read()
     news_lxml = BeautifulSoup(news_html, "lxml")
     try:
         content = news_lxml.find("div", "detail__body-text itp_bodycontent")
-        print(content.find_all("p", class_=False))
-    except Exception:
-        print("skip")
+        paragraphs = content.find_all("p", class_=False)
+        for paragraph in paragraphs:
+            # stop_words = set(stopwords.words("indonesian"))
+            # tokens = word_tokenize(paragraph.get_text())
+            print(paragraph.get_text(), "\n")
+            # result = [i for i in tokens if not i in stop_words]
+            # print (result)
+    except Exception as error:
+        print(error)
 
     # break
 
