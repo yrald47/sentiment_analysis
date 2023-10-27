@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Kompas",
+    "link": "https://www.kompas.com/tag/",
+    "content-class": "read__content"
+  },
+  {
+    "name": "Tempo",
+    "link": "https://www.tempo.co/tag/",
+    "content-class": "detail-konten"
+  },
+  {
+    "name": "Detik",
+    "link": "https://www.detik.com/tag/",
+    "content-class": "detail__body-text itp_bodycontent"
+  },
+  {
+    "name": "CNN",
+    "link": "https://www.cnnindonesia.com/tag/",
+    "content-class": "detail-text text-cnn_black text-sm grow min-w-0"
+  },
+  {
+    "name": "Liputan6",
+    "link": "https://www.liputan6.com/search?q=",
+    "content-class": "article-content-body__item-content"
+  }
+]
