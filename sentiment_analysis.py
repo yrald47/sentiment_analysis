@@ -25,7 +25,6 @@ soup = BeautifulSoup(news_search, "lxml")
 # with open('detik.lxml', 'w') as f:
 #     f.write(soup.prettify())
 
-###
 news_list = soup.find_all("article")
 # print(len(news_list))
 # print(news_list[0])
