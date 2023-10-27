@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-hostname = ''
+hostname = '172.16.100.212'
 port = 27017  # Default MongoDB port
 username = 'ictdata'  # If authentication is required
 password = 'P@ssw0rd'  # If authentication is required

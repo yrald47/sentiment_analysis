@@ -4,6 +4,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import config
+
 # import nltk
 # nltk.download('punkt')
 # nltk.download('vader_lexicon')
@@ -11,9 +12,6 @@ import config
 
 # client = MongoClient()
 # Provide the connection details
-mydict = {"name": "John", "address": "Highway 37"}
-x = config.collection.insert_one(mydict)
-# print(x.inserted_id)
 
 keyword = "bca"
 # html = urllib2.urlopen("https://search.kompas.com/search/?q=BCA&submit=Submit#gsc.tab=0&gsc.q=BCA&gsc.sort=date").read()
@@ -45,12 +43,17 @@ for news in news_list:
     try:
         content = news_lxml.find("div", "detail__body-text itp_bodycontent")
         paragraphs = content.find_all("p", class_=False)
+        context = ""
         for paragraph in paragraphs:
             # stop_words = set(stopwords.words("indonesian"))
             # tokens = word_tokenize(paragraph.get_text())
-            print(paragraph.get_text(), "\n")
+            # print(paragraph.get_text(), "\n")
+            context += paragraph.get_text() + "\n"
             # result = [i for i in tokens if not i in stop_words]
             # print (result)
+        # print(context)
+        mydict = {"title": title, "link": link, "content": context}
+        x = config.collection.insert_one(mydict)
     except Exception as error:
         print(error)
 
@@ -71,7 +74,7 @@ for item in news:
     
     if blank == 3:
         break
-
+        
     if item.get_text() != "":
         print(item.get_text())
         blank = 0
