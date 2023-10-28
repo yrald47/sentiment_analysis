@@ -1,42 +1,44 @@
-[
-  {
-    "name": "Kompas",
-    "link": "https://www.kompas.com/tag/",
-    "list_news_tag": "div",
-    "list_news_tag_class": "article__list clearfix",
-    "news_link_class": "article__link",
-    "content-class": "read__content"
-  },
-  {
-    "name": "Tempo",
-    "link": "https://www.tempo.co/tag/",
-    "list_news_tag": "article",
-    "list_news_tag_class": "",
-    "news_link_class": "",
-    "content-class": "detail-konten"
-  },
-  {
-    "name": "Detik",
-    "link": "https://www.detik.com/tag/",
-    "list_news_tag": "article",
-    "list_news_tag_class": "",
-    "news_link_class": "",
-    "content-class": "detail__body-text itp_bodycontent"
-  },
-  {
-    "name": "CNN Indonesia",
-    "link": "https://www.cnnindonesia.com/tag/",
-    "list_news_tag": "article",
-    "list_news_tag_class": "",
-    "news_link_class": "flex group items-center gap-4",
-    "content-class": "detail-text text-cnn_black text-sm grow min-w-0"
-  },
-  {
-    "name": "Liputan6",
-    "link": "https://www.liputan6.com/search?q=",
-    "list_news_tag": "article",
-    "list_news_tag_class": "",
-    "news_link_class": "ui--a articles--iridescent-list--text-item__title-link",
-    "content-class": "article-content-body__item-content"
-  }
-]
+{
+  "news_portal": [
+    {
+      "name": "Kompas",
+      "link": "https://www.kompas.com/tag/",
+      "list_news_tag": "div",
+      "list_news_tag_class": "article__list clearfix",
+      "news_link_class": "article__link",
+      "content-class": "read__content"
+    },
+    {
+      "name": "Tempo",
+      "link": "https://www.tempo.co/tag/",
+      "list_news_tag": "article",
+      "list_news_tag_class": "",
+      "news_link_class": "",
+      "content-class": "detail-konten"
+    },
+    {
+      "name": "Detik",
+      "link": "https://www.detik.com/tag/",
+      "list_news_tag": "article",
+      "list_news_tag_class": "",
+      "news_link_class": "",
+      "content-class": "detail__body-text itp_bodycontent"
+    },
+    {
+      "name": "CNN Indonesia",
+      "link": "https://www.cnnindonesia.com/tag/",
+      "list_news_tag": "article",
+      "list_news_tag_class": "",
+      "news_link_class": "flex group items-center gap-4",
+      "content-class": "detail-text text-cnn_black text-sm grow min-w-0"
+    },
+    {
+      "name": "Liputan6",
+      "link": "https://www.liputan6.com/search?q=",
+      "list_news_tag": "article",
+      "list_news_tag_class": "",
+      "news_link_class": "ui--a articles--iridescent-list--text-item__title-link",
+      "content-class": "article-content-body__item-content"
+    }
+  ]
+}
