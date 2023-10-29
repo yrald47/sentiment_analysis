@@ -51,7 +51,7 @@ for news in news_list:
             # result = [i for i in tokens if not i in stop_words]
             # print (result)
         # print(context)
-        mydict = {"title": title, "link": link, "content": context}
+        mydict = {"title": hash(title), "link": link, "content": context}
         x = config.collection.insert_one(mydict)
     except Exception as error:
         print(error)
