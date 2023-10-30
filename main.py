@@ -17,7 +17,7 @@ for portals in datastore['news_portal']:
     news_link_class = portals['news_link_class']
     print("News list from " + portals['name'])
     links = news_scrapping.getLinks(link, list_news_tag, list_news_tag_class, news_link_class)
-    print(links)
+    print(len(links))
     
     content_class = portals['content-class']
     title_tag = portals['title_tag']

@@ -26,26 +26,31 @@ def getContent(link, news_tag_class, title_tag, title_tag_class, news_date_tag, 
     news_lxml = BeautifulSoup(news_html, "lxml")
     # print(news_lxml)
     try:
-        content = news_lxml.find("div", news_tag_class)
+        content = news_lxml.find("div", news_tag_class[0])
         # print(content)
         paragraphs = content.find_all("p", class_=False)
-        # print(paragraphs)
-        # title = news_lxml.find(title_tag, title_tag_class).get_text()
-        title = news_lxml.find("title").get_text()
-        print(title, type(title))
-        # news_date = news_lxml.find(news_date_tag, news_date_tag_class).get_text()
-        # title = "titlelellelel"
-        # news_date = "2023"
-        context = ""
-        for paragraph in paragraphs:
-            context += paragraph.get_text() + "\n"
-        
-        jakarta = pytz.timezone('Asia/Jakarta')
-        scraping_date = datetime.now(jakarta)
-        mydict = {"scraping_date": scraping_date, "title": hash(title), "link": link, "content": context}
-        x = config.collection.insert_one(mydict)
     except Exception as error:
-        print(error)
+        content = news_lxml.find("div", news_tag_class[1])
+        # print(content)
+        paragraphs = content.find_all("p", class_=False)
+    
+    print(paragraphs)
+    # print(paragraphs)
+    # title = news_lxml.find(title_tag, title_tag_class).get_text()
+    title = news_lxml.find("title").get_text()
+    print(title, type(title))
+    # news_date = news_lxml.find(news_date_tag, news_date_tag_class).get_text()
+    # title = "titlelellelel"
+    # news_date = "2023"
+    context = ""
+    for paragraph in paragraphs:
+        context += paragraph.get_text() + "\n"
+    
+    jakarta = pytz.timezone('Asia/Jakarta')
+    scraping_date = datetime.now(jakarta)
+    mydict = {"scraping_date": scraping_date, "title": hash(title), "link": link, "content": context}
+    x = config.collection.insert_one(mydict)
+    
 
 '''
 keyword = "bca"
