@@ -8,8 +8,8 @@ password = ''  # If authentication is required
 # Create a MongoClient instance
 client = MongoClient(hostname, port, username=username, password=password)
 
-db = client['sentiment']
-collection = db['news']
+db = client['your_db']
+collection = db['your_collection']
 
 '''
 {

@@ -27,12 +27,12 @@ def getContent(link, news_tag_class, title_tag, title_tag_class, news_date_tag, 
     # print(news_lxml)
     try:
         content = news_lxml.find("div", news_tag_class[0])
-        # print(content)
         paragraphs = content.find_all("p", class_=False)
     except Exception as error:
         content = news_lxml.find("div", news_tag_class[1])
-        # print(content)
         paragraphs = content.find_all("p", class_=False)
+    finally:
+        print(error)
     
     print(paragraphs)
     # print(paragraphs)
@@ -48,33 +48,5 @@ def getContent(link, news_tag_class, title_tag, title_tag_class, news_date_tag, 
     
     jakarta = pytz.timezone('Asia/Jakarta')
     scraping_date = datetime.now(jakarta)
-    mydict = {"scraping_date": scraping_date, "title": hash(title), "link": link, "content": context}
+    mydict = {"scraping_date": scraping_date, "title": hash(title.str.lower()), "link": link, "content": context}
     x = config.collection.insert_one(mydict)
-    
-
-'''
-keyword = "bca"
-news_search = urllib2.urlopen("https://www.detik.com/tag/"+keyword).read()
-
-soup = BeautifulSoup(news_search, "lxml")
-
-news_list = soup.find_all("article")
-
-for news in news_list:
-    link = news.find('a', href=True)['href']
-    title = news.find("h2", "title").get_text()
-    print("\nlink: " + link)
-    print("title: " + title)
-    news_html = urllib2.urlopen(link).read()
-    news_lxml = BeautifulSoup(news_html, "lxml")
-    try:
-        content = news_lxml.find("div", "detail__body-text itp_bodycontent")
-        paragraphs = content.find_all("p", class_=False)
-        context = ""
-        for paragraph in paragraphs:
-            context += paragraph.get_text() + "\n"
-        mydict = {"title": title, "link": link, "content": context}
-        x = config.collection.insert_one(mydict)
-    except Exception as error:
-        print(error)
-'''
