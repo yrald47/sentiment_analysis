@@ -9,11 +9,21 @@ portal_json_file = "portal.json"
 with open(portal_json_file, 'r') as f:
     datastore = json.load(f)
     
-# print(datastore['news_portal'][0]['link'] + keyword)
 for portals in datastore['news_portal']:
     link = portals['link'] + keyword
+    print("\n" + link)
     list_news_tag = portals['list_news_tag']
     list_news_tag_class = portals['list_news_tag_class']
     news_link_class = portals['news_link_class']
-    print("List news from " + portals['name'])
-    news_scrapping.getLinks(link, list_news_tag, list_news_tag_class, news_link_class)
+    print("News list from " + portals['name'])
+    links = news_scrapping.getLinks(link, list_news_tag, list_news_tag_class, news_link_class)
+    print(links)
+    
+    content_class = portals['content-class']
+    title_tag = portals['title_tag']
+    title_tag_class = portals['title_tag_class']
+    news_date_tag = portals['news_date_tag']
+    news_date_tag_class =  portals['news_date_tag_class']
+    for link in links:
+        print(link)
+        news_scrapping.getContent(link, content_class, title_tag, title_tag_class, news_date_tag, news_date_tag_class)
