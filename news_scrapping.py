@@ -7,6 +7,7 @@ from nltk.tokenize import word_tokenize
 from datetime import datetime
 import pytz
 import config
+import sys
 
 def getLinks(tag_search, list_news_tag, list_news_tag_class, news_link_class):
     req = Request(url=tag_search, headers={'User-Agent': 'Mozilla/5.0'})
@@ -20,19 +21,19 @@ def getLinks(tag_search, list_news_tag, list_news_tag_class, news_link_class):
     return links
 
 
-def getContent(link, news_tag_class, title_tag, title_tag_class, news_date_tag, news_date_tag_class):
+def getContent(link, news_tag, news_tag_class, title_tag, title_tag_class, news_date_tag, news_date_tag_class):
     req = Request(url=link, headers={'User-Agent': 'Mozilla/5.0'})
     news_html = urllib2.urlopen(req).read()
     news_lxml = BeautifulSoup(news_html, "lxml")
     # print(news_lxml)
-    try:
-        content = news_lxml.find("div", news_tag_class[0])
-        paragraphs = content.find_all("p", class_=False)
-    except Exception as error:
-        content = news_lxml.find("div", news_tag_class[1])
-        paragraphs = content.find_all("p", class_=False)
-    finally:
-        print(error)
+    for item in news_tag_class:
+        index = news_tag_class.index(item)
+        try:
+            content = news_lxml.find(news_tag[index], item)
+            paragraphs = content.find_all("p", class_=False)
+            break
+        except Exception:
+            continue
     
     print(paragraphs)
     # print(paragraphs)
@@ -48,5 +49,5 @@ def getContent(link, news_tag_class, title_tag, title_tag_class, news_date_tag, 
     
     jakarta = pytz.timezone('Asia/Jakarta')
     scraping_date = datetime.now(jakarta)
-    mydict = {"scraping_date": scraping_date, "title": hash(title.str.lower()), "link": link, "content": context}
+    mydict = {"scraping_date": scraping_date, "title": hash(title.lower()), "link": link, "content": context}
     x = config.collection.insert_one(mydict)

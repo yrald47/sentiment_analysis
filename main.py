@@ -24,6 +24,7 @@ for portals in datastore['news_portal']:
     title_tag_class = portals['title_tag_class']
     news_date_tag = portals['news_date_tag']
     news_date_tag_class =  portals['news_date_tag_class']
+    content_tag = portals['content_tag']
     for link in links:
         print(link)
-        news_scrapping.getContent(link, content_class, title_tag, title_tag_class, news_date_tag, news_date_tag_class)
+        news_scrapping.getContent(link, content_tag, content_class, title_tag, title_tag_class, news_date_tag, news_date_tag_class)
