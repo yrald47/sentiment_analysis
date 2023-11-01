@@ -45,7 +45,7 @@ def getContent(link, news_tag, news_tag_class, title_tag, title_tag_class, news_
     # news_date = "2023"
     context = ""
     for paragraph in paragraphs:
-        context += paragraph.get_text() + "\n"
+        context += paragraph.get_text()
     
     jakarta = pytz.timezone('Asia/Jakarta')
     scraping_date = datetime.now(jakarta)
