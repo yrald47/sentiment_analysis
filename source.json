@@ -1,0 +1,79 @@
+{
+  "news_portal": [
+    {
+      "name": "Kompas",
+      "link": "https://www.kompas.com/tag/",
+      "list_news_tag": "div",
+      "list_news_tag_class": "article__list clearfix",
+      "news_link_class": "article__link",
+      "content_tag": ["div"],
+      "content-class": ["read__content"],
+      "title_tag": "h1",
+      "title_tag_class": "title margin-bottom-sm",
+      "writer_tag": "span",
+      "writer_tag_class": "",
+      "news_date_tag": "h1",
+      "news_date_tag_class": "read__title"
+    },
+    {
+      "name": "Tempo",
+      "link": "https://www.tempo.co/tag/",
+      "list_news_tag": "article",
+      "list_news_tag_class": "text-card",
+      "news_link_class": "",
+      "content_tag": ["div", "div", "figcaption"],
+      "content-class": ["detail-konten", "detail-in", "caption"],
+      "title_tag": "h1",
+      "title_tag_class": "title margin-bottom-sm",
+      "writer_tag": "span",
+      "writer_tag_class": "",
+      "news_date_tag": "p",
+      "news_date_tag_class": "date margin-bottom-sm"
+    },
+    {
+      "name": "Detik",
+      "link": "https://www.detik.com/tag/",
+      "list_news_tag": "article",
+      "list_news_tag_class": "",
+      "news_link_class": "",
+      "content_tag": ["div"],
+      "content-class": ["detail__body-text itp_bodycontent"],
+      "title_tag": "h1",
+      "title_tag_class": "detail__title",
+      "writer_tag": "span",
+      "writer_tag_class": "",
+      "news_date_tag": "div",
+      "news_date_tag_class": "detail__date"
+    },
+    {
+      "name": "CNN Indonesia",
+      "link": "https://www.cnnindonesia.com/tag/",
+      "list_news_tag": "article",
+      "list_news_tag_class": "flex-grow",
+      "news_link_class": "",
+      "content_tag": ["div"],
+      "content-class": ["detail-text text-cnn_black text-sm grow min-w-0"],
+      "title_tag": "h1",
+      "title_tag_class": "mb-2 text-[28px] leading-9 text-cnn_black",
+      "writer_tag": "span",
+      "writer_tag_class": "",
+      "news_date_tag": "div",
+      "news_date_tag_class": "text-cnn_grey text-sm mb-4"
+    },
+    {
+      "name": "Liputan6",
+      "link": "https://www.liputan6.com/search?q=",
+      "list_news_tag": "article",
+      "list_news_tag_class": "articles--iridescent-list--item articles--iridescent-list--text-item",
+      "news_link_class": "ui--a articles--iridescent-list--text-item__title-link",
+      "content_tag": ["div"],
+      "content-class": ["article-content-body__item-content"],
+      "title_tag": "h1",
+      "title_tag_class": "read-page--header--title entry-title",
+      "writer_tag": "span",
+      "writer_tag_class": "",
+      "news_date_tag": "",
+      "news_date_tag_class": ""
+    }
+  ]
+}
