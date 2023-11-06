@@ -41,7 +41,6 @@ def getContent(link, news_tag, news_tag_class, title_tag, title_tag_class, news_
     title = news_lxml.find("title").get_text()
     print(title, type(title))
     # news_date = news_lxml.find(news_date_tag, news_date_tag_class).get_text()
-    # title = "titlelellelel"
     # news_date = "2023"
     context = ""
     for paragraph in paragraphs:
@@ -51,3 +50,36 @@ def getContent(link, news_tag, news_tag_class, title_tag, title_tag_class, news_
     scraping_date = datetime.now(jakarta)
     mydict = {"scraping_date": scraping_date, "title": hash(title.lower()), "link": link, "content": context}
     x = config.collection.insert_one(mydict)
+
+def getContent2(link, content_tag, content_class, paragraph_tag, paragraph_class):
+    req = Request(url=link, headers={'User-Agent': 'Mozilla/5.0'})
+    news_html = urllib2.urlopen(req).read()
+    news_lxml = BeautifulSoup(news_html, "lxml")
+
+    paragraphs = []
+    for index, classes in enumerate(content_class):
+        # index = content_class.index(classes)
+        print("INDEX: " + str(index) )
+        print("<" + content_tag[index] + " class='" + classes + "'><" + paragraph_tag[index] + " class='" + paragraph_class[index] + "'></" + paragraph_tag[index] + "></" + content_tag[index] + ">")
+        # print(news_lxml.find(content_tag[index], tag))
+        try:
+            # content = news_lxml.find(content_tag[index], classes)
+            paragraphs = news_lxml.find(content_tag[index], classes).find_all(paragraph_tag[index], class_=False) if paragraph_class[index] == "" else news_lxml.find(content_tag[index], classes).find_all(paragraph_tag[index], paragraph_class[index])
+            break
+        except Exception:
+            continue
+        
+    
+    # print(paragraphs)
+    title = news_lxml.find("title").get_text()
+    print(title, type(title))
+    
+    context = ""
+    for paragraph in paragraphs:
+        # print(paragraph)
+        context += paragraph.get_text()
+
+    print(context.encode('utf-8'))
+    
+    # jakarta = pytz.timezone('Asia/Jakarta')
+    # scraping_date = datetime.now(jakarta)
