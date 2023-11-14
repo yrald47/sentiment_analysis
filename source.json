@@ -3,77 +3,156 @@
     {
       "name": "Kompas",
       "link": "https://www.kompas.com/tag/",
-      "list_news_tag": "div",
-      "list_news_tag_class": "article__list clearfix",
-      "news_link_class": "article__link",
+      "each_result_tag": "div",
+      "each_result_class": "article__list clearfix",
+      "each_result_link_class": "article__link",
       "content_tag": ["div"],
-      "content-class": ["read__content"],
+      "content_class": ["read__content"],
+      "paragraph_tag": ["p"],
+      "paragraph_class": [""],
+      "content_xpath": [
+        "/html/body/div[1]/div[3]/div[4]/div[1]/div[5]/div[2]/div[1]/div[1]/p/text()"
+      ],
+      "title_xpath": "/html/body/div[1]/div[3]/div[3]/div/h1/text()",
+      "date_xpath": "",
       "title_tag": "h1",
-      "title_tag_class": "title margin-bottom-sm",
+      "title_tag_class": "read__title",
       "writer_tag": "span",
       "writer_tag_class": "",
-      "news_date_tag": "h1",
-      "news_date_tag_class": "read__title"
+      "news_date_tag": "div",
+      "news_date_class": "read__time",
+      "date_string_splitter": "-",
+      "date_format": "%d/%m/%Y, %H:%M",
+      "datetime_regex": "\\d{1,2}/\\d{1,2}/\\d{4}, \\d{2}:\\d{2}",
+      "exception_link_containt": []
     },
     {
       "name": "Tempo",
       "link": "https://www.tempo.co/tag/",
-      "list_news_tag": "article",
-      "list_news_tag_class": "text-card",
-      "news_link_class": "",
-      "content_tag": ["div", "div", "figcaption"],
-      "content-class": ["detail-konten", "detail-in", "caption"],
+      "each_result_tag": "article",
+      "each_result_class": "text-card",
+      "each_result_link_class": "",
+      "content_tag": ["div", "div", "article", "article"],
+      "content_class": [
+        "detail-konten",
+        "detail-in",
+        "text-card padding-no",
+        "detail-artikel"
+      ],
+      "paragraph_tag": ["p", "p", "figcaption", "div"],
+      "paragraph_class": ["", "", "caption", "detail-in"],
+      "content_xpath": [
+        "//div[@class='detail-konten']/p/text()",
+        "//article[@class='detail-artikel']/div[@class='detail-in']/text()",
+        "//div[@class='detail-in']/p/text()",
+        "//article[@class='text-card padding-no']/figcaption[@class='caption']/text()"
+      ],
+      "title_xpath": "/html/body/main/div[2]/main/article[1]/div[1]/h1/text()",
+      "date_xpath": "",
       "title_tag": "h1",
       "title_tag_class": "title margin-bottom-sm",
       "writer_tag": "span",
       "writer_tag_class": "",
       "news_date_tag": "p",
-      "news_date_tag_class": "date margin-bottom-sm"
+      "news_date_class": "date margin-bottom-sm",
+      "date_string_splitter": ",",
+      "date_format": "%d %B %Y %H:%M",
+      "datetime_regex": "\\d{1,2} [a-zA-Z]+ \\d{4} \\d{2}:\\d{2}",
+      "exception_link_containt": []
     },
     {
       "name": "Detik",
       "link": "https://www.detik.com/tag/",
-      "list_news_tag": "article",
-      "list_news_tag_class": "",
-      "news_link_class": "",
-      "content_tag": ["div"],
-      "content-class": ["detail__body-text itp_bodycontent"],
+      "each_result_tag": "article",
+      "each_result_class": "",
+      "each_result_link_class": "",
+      "content_tag": ["div", "div"],
+      "content_class": [
+        "detail__body-text itp_bodycontent",
+        "detail__media media-nav"
+      ],
+      "paragraph_tag": ["p", "figcaption"],
+      "paragraph_class": ["", "mgt-16"],
+      "content_xpath": [
+        "//div[@class='detail__body-text itp_bodycontent']/p/text()",
+        "//div[@class='detail__media media-nav']/figcaption[@class='mgt-16']/text()"
+      ],
+      "title_xpath": "/html/body/div[9]/div[2]/div[1]/article/div[1]/h1/text()",
+      "date_xpath": "",
       "title_tag": "h1",
       "title_tag_class": "detail__title",
       "writer_tag": "span",
       "writer_tag_class": "",
       "news_date_tag": "div",
-      "news_date_tag_class": "detail__date"
+      "news_date_class": "detail__date",
+      "date_string_splitter": "",
+      "date_format": "",
+      "datetime_regex": "\\d{1,2} [a-zA-Z]+ \\d{4} \\d{2}:\\d{2}",
+      "exception_link_containt": []
     },
     {
       "name": "CNN Indonesia",
       "link": "https://www.cnnindonesia.com/tag/",
-      "list_news_tag": "article",
-      "list_news_tag_class": "flex-grow",
-      "news_link_class": "",
-      "content_tag": ["div"],
-      "content-class": ["detail-text text-cnn_black text-sm grow min-w-0"],
+      "each_result_tag": "article",
+      "each_result_class": "flex-grow",
+      "each_result_link_class": "",
+      "content_tag": ["div", "div", "div", "div"],
+      "content_class": [
+        "detail-text text-cnn_black text-sm grow min-w-0",
+        "content-wrapper",
+        "detail-text text-cnn_black text-sm grow",
+        "detail-wrap flex gap-4 relative"
+      ],
+      "paragraph_tag": ["p", "p", "p", "div"],
+      "paragraph_class": [
+        "",
+        "aos-init aos-animate",
+        "",
+        "detail-text text-cnn_black text-sm grow"
+      ],
+      "content_xpath": [
+        "//div[@class='detail-text text-cnn_black text-sm grow min-w-0']/p/text()",
+        "//div[@class='content-wrapper']/p[@class='aos-init aos-animate']/text()",
+        "//div[@class='detail-text text-cnn_black text-sm grow']/p/text()s"
+      ],
+      "title_xpath": "//h1[@class='mb-2 text-[28px] leading-9 text-cnn_black']/text()",
+      "date_xpath": "",
       "title_tag": "h1",
       "title_tag_class": "mb-2 text-[28px] leading-9 text-cnn_black",
       "writer_tag": "span",
       "writer_tag_class": "",
       "news_date_tag": "div",
-      "news_date_tag_class": "text-cnn_grey text-sm mb-4"
+      "news_date_class": "text-cnn_grey text-sm mb-4",
+      "date_string_splitter": "",
+      "date_format": "",
+      "datetime_regex": "\\d{1,2} [a-zA-Z]{3} \\d{4} \\d{2}:\\d{2}",
+      "exception_link_containt": ["/longform/"]
     },
     {
       "name": "Liputan6",
       "link": "https://www.liputan6.com/search?q=",
-      "list_news_tag": "article",
-      "list_news_tag_class": "articles--iridescent-list--item articles--iridescent-list--text-item",
-      "news_link_class": "ui--a articles--iridescent-list--text-item__title-link",
+      "each_result_tag": "article",
+      "each_result_class": "articles--iridescent-list--item articles--iridescent-list--text-item",
+      "each_result_link_class": "ui--a articles--iridescent-list--text-item__title-link",
       "content_tag": ["div"],
-      "content-class": ["article-content-body__item-content"],
+      "content_class": ["article-content-body__item-content"],
+      "paragraph_tag": ["p"],
+      "paragraph_class": [""],
+      "content_xpath": [
+        "//div[@class='article-content-body__item-content']/p/text()"
+      ],
+      "title_xpath": "//h1[@class='read-page--header--title entry-title']/text()",
+      "date_xpath": "",
       "title_tag": "h1",
       "title_tag_class": "read-page--header--title entry-title",
       "writer_tag": "span",
       "writer_tag_class": "",
-      "news_date_tag": "",
-      "news_date_tag_class": ""
+      "news_date_tag": "time",
+      "news_date_class": "read-page--header--author__datetime",
+      "date_string_splitter": "",
+      "date_format": "",
+      "datetime_regex": "\\d{1,2} [a-zA-Z]{3} \\d{4}, \\d{2}:\\d{2}",
+      "exception_link_containt": []
     }
   ]
 }

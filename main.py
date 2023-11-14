@@ -6,7 +6,7 @@ import sys
 keyword = ''.join(sys.argv[1:])
 print(keyword)
 
-portal_json_file = "portal.json"
+portal_json_file = "source.json"
 with open(portal_json_file, 'r') as f:
     datastore = json.load(f)
 
