@@ -31,7 +31,7 @@ data.head()
 data['text_cleaning'] = data['text_cleaning'].str.lower()
 
 ## Normalisasi
-norm = {"dgn": "dengan", "problem": "masalah"} # Kosakata yang tidak ada diKBBI
+norm = {"dgn": "dengan", "problem": "masalah"} # Kosakata yang tidak ada di KBBI
 # Mengubah kata yang tak terdaftar menjadi terdaftar
 def normalisasi(str_text):
     for i in norm:
