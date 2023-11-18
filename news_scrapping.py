@@ -24,7 +24,10 @@ def getLinks(tag_search, list_news_tag, list_news_tag_class, news_link_class):
         links = []
         for news in news_list:
             link = news.find('a', href=True)['href'] if news_link_class == "" else news.find('a', news_link_class, href=True)['href']
-            links.append(link)
+            collection = config.db['news']
+            result = collection.count_documents({"link": {"$regex": re.compile(link[:75])}})
+            if result == 0:
+                links.append(link)
         return links
     except Exception as e:
         return []

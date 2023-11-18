@@ -244,4 +244,16 @@ def resubDash():
     result_text = re.sub(r'.* -\s', '', news)
     print(result_text)
 
-resubDash()
+def selectLink():
+    import config
+    
+    link = "https://bisnis.tempo.co/read/1798210/nasabah-bca-hilang-duit-rp-685-juta-karena-transaksi-qris-fraud-atau-salah-sistem"
+    # print(link[:75])
+    collection = config.db['news']
+    result = collection.count_documents({"link": {"$regex": re.compile(link[:75])}})
+    # ("link": {"$regex": re.compile(link[:75])})
+    print(result)
+    # for documents in result:
+    #     print(documents)
+
+selectLink()
