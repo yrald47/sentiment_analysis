@@ -237,4 +237,11 @@ def urllibTimeout():
     except URLError as e:
         print(f"Error: {e}")
 
-urllibTimeout()
+def resubDash():
+    news = "TEMPO.CO, Jakarta - Pakar keamanan siber dari Vaksincom, Alfons Tanujaya memberikan analisis atas kasus nasabah PT Bank Central Asia Tbk (BCA) yang kehilangan uang senilai Rp 68,5 juta dari rekening tabungannya. Nasabah mengaku itu terjadi saat sedang naik gunung sehingga ponselnya di luar jangkauan internet. Sementara itu, BCA menyebut transaksinya sah karena Quick Response Code Indonesian Standard (QRIS) hanya bisa dilakukan dari perangkat yang terinstal mobile banking.Menurut Alfons, seharusnya bank memiliki bukti perangkat yang melakukan transaksi QRIS seperti fingerprint perangkat, IP perangkat, dan posisi perangkat ketika melakukan transaksi. Selain itu, kata dia, ada cara murah untuk verifikasi transaksi QRIS, tidak perlu melakukan forensik digital.Cara Membuat QRIS untuk Merchant, Ikuti Langkah Berikut“Hubungi saja merchant penerima QRIS dan tanyakan transaksi yang bermasalah itu untuk transaksi apa. Kan jadi ketahuan itu transaksi valid, fraud (penipuan), atau karena kesalahan sistem,” ucap Alfons lewat keterangan tertulis pada Jumat, 17 November 2023.Sehingga, dia melanjutkan, jika merchant atau tokonya valid seharusnya masalah ini selesai. Karena merchant akan memberikan bukti transaksi. Namun, yang menjadi masalah jika merchant-nya menghilang, ini akan menjadi lebih sulit lagi. Artinya kemungkinan besar adalah aksi fraud.Alfons menyarankan agar bank harus meminta bantuan pihak berwenang untuk menyelidiki lebih jauh dan menangkap aktor di balik merchant fraud ini dan memperbaiki sistem penerimaan merchant-nya. “Hal ini mungkin bisa menjadi perhatian Bank Indonesia atas sistem dan prosedur penerimaan merchant QRIS untuk semua bank,” tutur dia.Terkini: Kekayaan Gibran Cawapres Termuda Rp 25 Miliar, Jokowi Akui Belum Ada Investor Asing Masuk IKNSebaliknya, Alfons berujar, nasabah juga harus membuktikan ponselnya ada di mana ketika saat transaksi. Satu-satunya cara adalah melakukan forensik atas ponsel tersebut untuk melihat ada di mana ponselnya ketika transaksi terseb ut dilakukan. Hal ini bisa menghilangkan kemungkinan adanya faktor lain.Dugaan kelemahan di sistem BCA\n"
+    # print(news.encode('utf-8'))
+    # pattern_to_remove = re.compile(r'.* - ')
+    result_text = re.sub(r'.* -\s', '', news)
+    print(result_text)
+
+resubDash()
