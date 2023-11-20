@@ -30,7 +30,6 @@ if __name__ == "__main__":
             a_week_before = today - timedelta(weeks=1)
             today_str = today.strftime('%d/%m/%Y')
             a_week_before_str = a_week_before.strftime('%d/%m/%Y')
-            # link = portals['link'] + keyword
             link = portals['search_link'].replace('keyword_to_replace', keyword).replace('cdate_replace', today_str).replace('fdate_replace', a_week_before_str).replace('tdate_replace', today_str)
             print("Search news from Link: " + link)
             # exit()
@@ -41,7 +40,6 @@ if __name__ == "__main__":
             print("Found " + str(len(links)) + " News list from " + portals['name'])
             # exit(0)
 
-            # portal = portals['name']
             content_tag = portals['content_tag']
             content_class = portals['content_class']
             paragraph_tag = portals['paragraph_tag']
@@ -59,10 +57,6 @@ if __name__ == "__main__":
             print("Exception: " + str(exception_link_containt))
             print("Datetime Regex: " + str(datetime_regex))
             print("Format: " + str(date_format))
-            # title_tag = portals['title_tag']
-            # title_tag_class = portals['title_tag_class']
-            # news_date_tag = portals['news_date_tag']
-            # news_date_tag_class =  portals['news_date_tag_class']
 
             for link in links:
                 jakarta = pytz.timezone('Asia/Jakarta')
@@ -82,7 +76,7 @@ if __name__ == "__main__":
                     # with open('news_content.txt', 'a', encoding="utf-8") as f:
                     #     f.write(str(result['content'].decode('utf-8')) + "\n\n")
                     collection = config.db['news']
-                    scrapped_news = {"source": portal_name, "scraping_date": scraping_date, "link": link, "title": result['title'], "news_date": result['news_date'], "content": re.sub(r'.* -\s', '', result['content'].decode('utf-8')), "error": result['error'].decode('utf-8')}
+                    scrapped_news = {"keyword": sys.argv[2], "source": portal_name, "scraping_date": scraping_date, "link": link, "title": result['title'], "news_date": result['news_date'], "content": re.sub(r'.* -\s', '', result['content'].decode('utf-8')), "error": result['error'].decode('utf-8')}
                     x = collection.insert_one(scrapped_news)
                 print("===============")
                 # exit()
@@ -91,5 +85,3 @@ if __name__ == "__main__":
 
     end_time = time.time()
     print(f"total waktu: {end_time - start_time}")
-    # tambah 1 collection buat meta data: url, tanggal, website, keyword
-    # async
