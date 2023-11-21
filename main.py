@@ -77,7 +77,7 @@ if __name__ == "__main__":
                     #     f.write(str(result['content'].decode('utf-8')) + "\n\n")
                     collection = config.db['news']
                     scrapped_news = {"keyword": sys.argv[2], "source": portal_name, "scraping_date": scraping_date, "link": link, "title": result['title'], "news_date": result['news_date'], "content": re.sub(r'.* -\s', '', result['content'].decode('utf-8')), "error": result['error'].decode('utf-8')}
-                    if scrapped_news['content'] != '':
+                    if (scrapped_news['content'] != '') and (scrapped_news['keyword'] in scrapped_news['content'].lower()):
                         x = collection.insert_one(scrapped_news)
                 print("===============")
                 # exit()
