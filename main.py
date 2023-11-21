@@ -71,5 +71,61 @@ if len(sys.argv) == 3 and sys.argv[1] == '-t':
             
             print("===============")
             # exit()
+<<<<<<< Updated upstream
 else:
     print('Ketik python main.py -t "keyword yang bersangkutan" ')
+=======
+            each_result_tag = portals['each_result_tag']
+            each_result_class = portals['each_result_class']
+            each_result_link_class = portals['each_result_link_class']
+            links = news_scrapping.getLinks(link, each_result_tag, each_result_class, each_result_link_class)
+            print("Found " + str(len(links)) + " News list from " + portals['name'])
+            # exit(0)
+
+            content_tag = portals['content_tag']
+            content_class = portals['content_class']
+            paragraph_tag = portals['paragraph_tag']
+            paragraph_class = portals['paragraph_class']
+            news_date_tag = portals['news_date_tag']
+            news_date_class = portals['news_date_class']
+            exception_link_containt = portals['exception_link_containt']
+            datetime_regex = portals['datetime_regex']
+            date_format = portals['date_format']
+
+            print("Content Tag: " + str(content_tag))
+            print("Content Class" + str(content_class))
+            print("Paragraph Tag: " + str(paragraph_tag))
+            print("Paragraph Class: " + str(paragraph_class))
+            print("Exception: " + str(exception_link_containt))
+            print("Datetime Regex: " + str(datetime_regex))
+            print("Format: " + str(date_format))
+
+            for link in links:
+                jakarta = pytz.timezone('Asia/Jakarta')
+                dt_now = datetime.now(jakarta)
+                scraping_date = dt.datetime.strptime(dt_now.strftime("%Y-%m-%d"), "%Y-%m-%d")
+                print("LINK: " + link)
+                scrap = True
+                for text in exception_link_containt:
+                    if link.find(text) >= 0:
+                        scrap = False
+                        break
+                print("SCRAP: " + str(scrap))
+                if scrap == True:
+                    result = news_scrapping.getContent2(link, content_tag, content_class, paragraph_tag, paragraph_class, news_date_tag, news_date_class, datetime_regex, date_format)
+                    print("Scraping at: " + str(scraping_date))
+                    print("RESULTS: " + str(result))
+                    # with open('news_content.txt', 'a', encoding="utf-8") as f:
+                    #     f.write(str(result['content'].decode('utf-8')) + "\n\n")
+                    collection = config.db['news']
+                    scrapped_news = {"keyword": sys.argv[2], "source": portal_name, "scraping_date": scraping_date, "link": link, "title": result['title'], "news_date": result['news_date'], "content": re.sub(r'.* -\s', '', result['content'].decode('utf-8')), "error": result['error'].decode('utf-8')}
+                    if scrapped_news['content'] != '':
+                        x = collection.insert_one(scrapped_news)
+                print("===============")
+                # exit()
+    else:
+        print('Ketik python main.py -t "keyword yang bersangkutan"')
+
+    end_time = time.time()
+    print(f"total waktu: {end_time - start_time}")
+>>>>>>> Stashed changes
