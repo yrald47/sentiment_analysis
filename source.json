@@ -14,7 +14,6 @@
       "paragraph_class": [""],
       "news_date_tag": ["div", "div"],
       "news_date_class": ["read__time", "videoKG-date"],
-      "date_string_splitter": "-",
       "date_format": "%d/%m/%Y, %H:%M",
       "datetime_regex": "\\d{1,2}[ /](?:[a-zA-Z]+|\\d{1,2})[ /]\\d{4}, \\d{2}:\\d{2}",
       "exception_link_containt": []
@@ -38,7 +37,6 @@
       "paragraph_class": ["", "", "caption", "detail-in"],
       "news_date_tag": ["p"],
       "news_date_class": ["date margin-bottom-sm"],
-      "date_string_splitter": ",",
       "date_format": "%d %B %Y %H:%M",
       "datetime_regex": "\\d{1,2} [a-zA-Z]+ \\d{4} \\d{2}:\\d{2}",
       "exception_link_containt": []
@@ -60,7 +58,6 @@
       "paragraph_class": ["", "mgt-16"],
       "news_date_tag": ["div"],
       "news_date_class": ["detail__date"],
-      "date_string_splitter": "",
       "date_format": "%d %b %Y %H:%M",
       "datetime_regex": "\\d{1,2} [a-zA-Z]+ \\d{4} \\d{2}:\\d{2}",
       "exception_link_containt": []
@@ -89,7 +86,6 @@
       ],
       "news_date_tag": ["div"],
       "news_date_class": ["text-cnn_grey text-sm mb-4"],
-      "date_string_splitter": "",
       "date_format": "%d %b %Y %H:%M",
       "datetime_regex": "\\d{1,2} [a-zA-Z]+ \\d{4} \\d{2}:\\d{2}",
       "exception_link_containt": ["/longform/"]
@@ -108,7 +104,6 @@
       "paragraph_class": [""],
       "news_date_tag": ["time"],
       "news_date_class": ["read-page--header--author__datetime"],
-      "date_string_splitter": "",
       "date_format": "%d %b %Y, %H:%M",
       "datetime_regex": "\\d{1,2} [a-zA-Z]{3} \\d{4}, \\d{2}:\\d{2}",
       "exception_link_containt": []
