@@ -11,9 +11,37 @@ from lxml import html
 import requests
 import locale
 import re
+
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+from textblob import TextBlob
+from transformers import pipeline
 # from nltk.corpus import stopwords
 # from nltk.tokenize import word_tokenize
 # import sys
+
+def sentiment_score(news):
+    # print(type(news))
+    stopword_factory = StopWordRemoverFactory()
+    stopword_remover = stopword_factory.create_stop_word_remover()
+    news = stopword_remover.remove(news)
+
+    stemmer_factory = StemmerFactory()
+    stemmer = stemmer_factory.create_stemmer()
+    news = stemmer.stem(news)
+    sentimen_analyzer = pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment')
+
+    hasil_sentimen = sentimen_analyzer(news)
+
+    print("Teks Berita (Bahasa Indonesia):", news)
+    print("Sentimen:", hasil_sentimen[0]['label'], "(Skor:", hasil_sentimen[0]['score'], ")")
+    if hasil_sentimen[0]['label'] == "4 start" or hasil_sentimen[0]['label'] == "5 stars":
+        sentimen = "positif"
+    elif hasil_sentimen[0]['label'] == "3 stars":
+        sentimen = "netral"
+    else:
+        sentimen = "negatif"
+    return sentimen
 
 def getLinks(tag_search, list_news_tag, list_news_tag_class, news_link_class):
     try:
@@ -32,7 +60,7 @@ def getLinks(tag_search, list_news_tag, list_news_tag_class, news_link_class):
     except Exception as e:
         return []
 
-def getContent2(link, content_tag, content_class, paragraph_tag, paragraph_class, news_date_tag, news_date_class, datetime_regex, date_format):
+def getContent(link, content_tag, content_class, paragraph_tag, paragraph_class, news_date_tag, news_date_class, datetime_regex, date_format):
     try:
         req = Request(url=link, headers={'User-Agent': 'Mozilla/5.0'})
         news_html = urllib2.urlopen(req).read()
@@ -90,7 +118,3 @@ def getContent2(link, content_tag, content_class, paragraph_tag, paragraph_class
         return {'title': title.lower(), 'news_date': news_date, 'content': context.encode('utf-8'), 'error': ''.encode('utf-8')}
     except Exception as e:
         return {'title': '', 'news_date': '', 'content': str(e).encode('utf-8'), 'error': str(e).encode('utf-8')}
-
-    # collection = config.db['news']
-    # scrapped_news = {"scraping_date": scraping_date, "title": hash(title.lower()), "link": link, "content": context}
-    # x = collection.insert_one(scrapped_news)

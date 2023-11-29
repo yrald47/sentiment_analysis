@@ -1,6 +1,7 @@
 import json
 import config
 import news_scrapping
+from news_scrapping import sentiment_score
 import sys
 import pytz
 from datetime import datetime, timedelta
@@ -61,14 +62,19 @@ def scrape_portal(portals):
                 break
         print("SCRAP: " + str(scrap))
         if scrap == True:
-            result = news_scrapping.getContent2(link, content_tag, content_class, paragraph_tag, paragraph_class, news_date_tag, news_date_class, datetime_regex, date_format)
+            result = news_scrapping.getContent(link, content_tag, content_class, paragraph_tag, paragraph_class, news_date_tag, news_date_class, datetime_regex, date_format)
             print("Scraping at: " + str(scraping_date))
-            print("RESULTS: " + str(result))
+            # print("RESULTS: " + str(result))
+
+            news = re.sub(r'.* -\s', '', result['content'].decode('utf-8'))
+            # print("News Type", type(news))
+            sentiment = sentiment_score(str(news))
+            print("Sentiment: ", sentiment, " (", type(sentiment) , ")")
             # with open('news_content.txt', 'a', encoding="utf-8") as f:
             #     f.write(str(result['content'].decode('utf-8')) + "\n\n")
-            collection = config.db['news']
-            scrapped_news = {"keyword": sys.argv[2], "source": portal_name, "scraping_date": scraping_date, "link": link, "title": result['title'], "news_date": result['news_date'], "content": re.sub(r'.* -\s', '', result['content'].decode('utf-8')), "error": result['error'].decode('utf-8')}
-            x = collection.insert_one(scrapped_news)
+            # collection = config.db['news']
+            # scrapped_news = {"keyword": sys.argv[2], "source": portal_name, "scraping_date": scraping_date, "link": link, "title": result['title'], "news_date": result['news_date'], "content": re.sub(r'.* -\s', '', result['content'].decode('utf-8')), "error": result['error'].decode('utf-8')}
+            # x = collection.insert_one(scrapped_news)
         print("===============")
         # exit()
 

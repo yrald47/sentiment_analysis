@@ -256,4 +256,578 @@ def selectLink():
     # for documents in result:
     #     print(documents)
 
-selectLink()
+def sentiment_scoring():
+    print("=====TextBlob=====")
+    from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+    from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+    from textblob import TextBlob
+
+    # Contoh teks berita dalam Bahasa Indonesia
+    teks_berita_id = "MPT Bank Central Asia Tbk (BBCA) membukukan kinerja positif. Sepanjang semester pertama tahun ini, perusahaan membukukan kenaikan laba bersih 34% secara tahunan (yoy) menjadi Rp 24,2 triliun. Perfoma positif didorong oleh kenaikan volume kredit, perbaikan kualitas pinjaman, serta peningkatan volume transaksi dan pendanaan."
+
+    # Menghilangkan stop words
+    stopword_factory = StopWordRemoverFactory()
+    stopword_remover = stopword_factory.create_stop_word_remover()
+    teks_berita_id = stopword_remover.remove(teks_berita_id)
+
+    # Stemming kata-kata
+    stemmer_factory = StemmerFactory()
+    stemmer = stemmer_factory.create_stemmer()
+    teks_berita_id = stemmer.stem(teks_berita_id)
+
+    # Membuat objek TextBlob
+    blob_id = TextBlob(teks_berita_id)
+
+    # Mendapatkan nilai polaritas sentimen
+    polaritas_id = blob_id.sentiment.polarity
+    print("Polaritas_id: ", polaritas_id)
+
+    # Menentukan sentimen berdasarkan nilai polaritas
+    if polaritas_id > 0:
+        sentimen_id = "Positif"
+    elif polaritas_id < 0:
+        sentimen_id = "Negatif"
+    else:
+        sentimen_id = "Netral"
+
+    # Menampilkan hasil
+    print("Teks Berita (Bahasa Indonesia):", teks_berita_id)
+    print("Sentimen:", sentimen_id)
+
+    print("=====SPaCy=====")
+    import spacy
+
+    teks_berita_id = "MPT Bank Central Asia Tbk (BBCA) membukukan kinerja positif. Sepanjang semester pertama tahun ini, perusahaan membukukan kenaikan laba bersih 34% secara tahunan (yoy) menjadi Rp 24,2 triliun. Perfoma positif didorong oleh kenaikan volume kredit, perbaikan kualitas pinjaman, serta peningkatan volume transaksi dan pendanaan."
+
+    # Load model bahasa Indonesia
+    nlp_id = spacy.load("xx_ent_wiki_sm")
+
+    # Proses teks menggunakan model SpaCy
+    doc_id = nlp_id(teks_berita_id)
+
+    # Mendapatkan nilai polaritas sentimen (contoh sederhana)
+    polaritas_id = sum([token.sentiment for token in doc_id]) / len(doc_id)
+    print("Polaritas id: ", polaritas_id)
+    # Menentukan sentimen berdasarkan nilai polaritas
+    if polaritas_id > 0:
+        sentimen_id = "Positif"
+    elif polaritas_id < 0:
+        sentimen_id = "Negatif"
+    else:
+        sentimen_id = "Netral"
+
+    # Menampilkan hasil
+    print("Teks Berita (Bahasa Indonesia):", teks_berita_id)
+    print("Sentimen:", sentimen_id)
+    
+    print("=====NLTK=====")
+    import nltk
+
+    nltk.download("stopwords")
+    nltk.download("indonesian")
+
+    from nltk.sentiment import SentimentIntensityAnalyzer
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+
+    teks_berita_id = "MPT Bank Central Asia Tbk (BBCA) membukukan kinerja positif. Sepanjang semester pertama tahun ini, perusahaan membukukan kenaikan laba bersih 34% secara tahunan (yoy) menjadi Rp 24,2 triliun. Perfoma positif didorong oleh kenaikan volume kredit, perbaikan kualitas pinjaman, serta peningkatan volume transaksi dan pendanaan."
+    
+    # Menghapus stop words (kata-kata umum yang tidak memberikan makna signifikan)
+    stop_words = set(stopwords.words("indonesian"))
+    kata_kunci = [kata.lower() for kata in word_tokenize(teks_berita_id) if kata.isalnum() and kata.lower() not in stop_words]
+
+    # Inisialisasi SentimentIntensityAnalyzer
+    sia = SentimentIntensityAnalyzer()
+
+    # Hitung nilai sentimen
+    nilai_sentimen = sia.polarity_scores(" ".join(kata_kunci))["compound"]
+    print("Nilai sentimen: ", nilai_sentimen)
+
+    # Menentukan sentimen berdasarkan nilai sentimen
+    if nilai_sentimen >= 0.05:
+        sentimen_nltk = "Positif"
+    elif nilai_sentimen <= -0.05:
+        sentimen_nltk = "Negatif"
+    else:
+        sentimen_nltk = "Netral"
+
+    # Menampilkan hasil
+    print("Teks Berita (Bahasa Indonesia):", teks_berita_id)
+    print("Sentimen:", sentimen_nltk)
+
+    print("=====Transformers BERT=====")
+    from transformers import pipeline
+
+    # Contoh teks berita dalam Bahasa Indonesia
+    teks_berita_id = "MPT Bank Central Asia Tbk (BBCA) membukukan kinerja positif. Sepanjang semester pertama tahun ini, perusahaan membukukan kenaikan laba bersih 34% secara tahunan (yoy) menjadi Rp 24,2 triliun. Perfoma positif didorong oleh kenaikan volume kredit, perbaikan kualitas pinjaman, serta peningkatan volume transaksi dan pendanaan."
+
+    # Menghilangkan stop words
+    stopword_factory = StopWordRemoverFactory()
+    stopword_remover = stopword_factory.create_stop_word_remover()
+    teks_berita_id = stopword_remover.remove(teks_berita_id)
+
+    # Stemming kata-kata
+    stemmer_factory = StemmerFactory()
+    stemmer = stemmer_factory.create_stemmer()
+    teks_berita_id = stemmer.stem(teks_berita_id)
+    
+    sentimen_analyzer = pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment')
+
+    # Analisis sentimen
+    hasil_sentimen = sentimen_analyzer(teks_berita_id)
+
+    # Menampilkan hasil
+    print("Teks Berita (Bahasa Indonesia):", teks_berita_id)
+    print("Sentimen:", hasil_sentimen[0]['label'], "(Skor:", hasil_sentimen[0]['score'], ")")
+    if hasil_sentimen[0]['label'] == "4 start" or hasil_sentimen[0]['label'] == "5 stars":
+        sentimen = "positif"
+    elif hasil_sentimen[0]['label'] == "3 stars":
+        sentimen = "netral"
+    else:
+        sentimen = "negatif"
+
+    print(sentimen)
+
+def nltkOnly():
+    from nltk.sentiment import SentimentIntensityAnalyzer
+    sia = SentimentIntensityAnalyzer()
+    print(sia.polarity_scores("aku pintar"))
+    
+def textblobBard():
+    import textblob
+    # Import teks yang akan dianalisis
+    teks = "Film ini sangat bagus, ceritanya menarik dan aktingnya juga keren."
+    # Buat objek TextBlob
+    blob = textblob.TextBlob(teks)
+    # Dapatkan nilai polarity
+    polarity = blob.sentiment.polarity
+    # Dapatkan nilai subjectivity
+    subjectivity = blob.sentiment.subjectivity
+    # Cetak hasil
+    print("Polarity:", polarity)
+    print("Subjectivity:", subjectivity)
+
+def texblobBard2():
+    import textblob
+
+    # Import teks yang akan dianalisis
+    teks = "Film ini sangat bagus, ceritanya menarik dan aktingnya juga keren"
+
+    # Analisis sentimen teks
+    sentiment = textblob.TextBlob(teks).sentiment
+
+    # Cetak hasil analisis
+    print("Polarity:", sentiment.polarity)
+    print("Subjectivity:", sentiment.subjectivity)
+
+    # Interpretasi hasil analisis
+    if sentiment.polarity > 0:
+        print("Sentimen: Positif")
+    elif sentiment.polarity < 0:
+        print("Sentimen: Negatif")
+    else:
+        print("Sentimen: Netral")
+def islLexicon():
+    import json
+    import requests
+
+    def get_indonesia_sentiment_lexicon():
+        url = "https://raw.githubusercontent.com/fajri91/InSet/master/data/lexicon-indoslang.json"
+        response = requests.get(url)
+        
+        try:
+            response.raise_for_status()
+            lexicon_data = json.loads(response.text)
+            return lexicon_data
+        except requests.exceptions.HTTPError as errh:
+            print ("HTTP Error:",errh)
+        except requests.exceptions.ConnectionError as errc:
+            print ("Error Connecting:",errc)
+        except requests.exceptions.Timeout as errt:
+            print ("Timeout Error:",errt)
+        except requests.exceptions.RequestException as err:
+            print ("Something went wrong:",err)
+
+    def analyze_sentiment(text, sentiment_lexicon):
+        words = text.lower().split()
+        sentiment_score = 0
+
+        for word in words:
+            if word in sentiment_lexicon:
+                sentiment_score += sentiment_lexicon[word]
+
+        # Nilai positif jika sentiment_score > 0, negatif jika < 0, dan netral jika 0
+        if sentiment_score > 0:
+            return "Positif"
+        elif sentiment_score < 0:
+            return "Negatif"
+        else:
+            return "Netral"
+
+    # Contoh teks untuk dianalisis
+    teks = "Buku itu bagus sekali, wangi, ceritanya juga bagus"
+
+    # Ambil kamus sentimen bahasa Indonesia dari ISL
+    isl_lexicon = get_indonesia_sentiment_lexicon()
+
+    # Analisis sentimen
+    if isl_lexicon:
+        hasil_sentimen = analyze_sentiment(teks, isl_lexicon)
+        # Tampilkan hasil
+        print(f"Sentimen dari teks '{teks}': {hasil_sentimen}")
+    else:
+        print("Gagal mendapatkan kamus sentimen.")
+
+def chatGPTSentiment():
+    # Install pustaka yang dibutuhkan
+    # pip install numpy pandas scikit-learn nltk
+
+    import pandas as pd
+    from sklearn.model_selection import train_test_split
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.naive_bayes import MultinomialNB
+    from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+    from nltk.stem import PorterStemmer
+
+    # Pra-pemrosesan teks
+    def preprocess_text(text):
+        stop_words = set(stopwords.words('indonesian'))
+        ps = PorterStemmer()
+        
+        # Tokenisasi
+        words = word_tokenize(text)
+        
+        # Hapus stop words dan lakukan stemming
+        words = [ps.stem(word) for word in words if word.isalnum() and word not in stop_words]
+        
+        return ' '.join(words)
+
+    # Baca dataset
+    # Pastikan dataset berisi dua kolom: 'text' dan 'label'
+    # 'text' berisi teks berita, 'label' berisi sentimen (pos, neg, net)
+    df = pd.read_csv('dataset_berita_sentimen.csv')
+
+    # Pra-pemrosesan teks pada kolom 'text'
+    df['text'] = df['text'].apply(preprocess_text)
+
+    # Bagi dataset menjadi set pelatihan dan pengujian
+    X_train, X_test, y_train, y_test = train_test_split(df['text'], df['label'], test_size=0.2, random_state=42)
+
+    # Ekstraksi fitur menggunakan TF-IDF
+    tfidf_vectorizer = TfidfVectorizer()
+    X_train_tfidf = tfidf_vectorizer.fit_transform(X_train)
+    X_test_tfidf = tfidf_vectorizer.transform(X_test)
+
+    # Buat model klasifikasi Naive Bayes
+    model = MultinomialNB()
+    model.fit(X_train_tfidf, y_train)
+
+    # Prediksi pada set pengujian
+    y_pred = model.predict(X_test_tfidf)
+
+    # Evaluasi model
+    print('Accuracy:', accuracy_score(y_test, y_pred))
+    print('\nClassification Report:\n', classification_report(y_test, y_pred))
+    print('\nConfusion Matrix:\n', confusion_matrix(y_test, y_pred))
+
+def sentimentBagas():
+    import string
+    from urllib.request import urlopen
+    import warnings
+    import stanfordnlp
+    # stanfordnlp.download('id')
+    import nltk
+    from nltk.corpus import stopwords
+    from nltk.util import ngrams
+    from collections import Counter
+    from IPython.display import display
+    
+    warnings.filterwarnings('ignore')
+    nlp = stanfordnlp.Pipeline(lang='id', processors='tokenize,pos')
+
+    s = "Pemberi kerja adalah orang perseorangan, pengusaha, badan hukum, atau badan-badan lainnya yang  mempekerjakan tenaga kerja dengan membayar upah atau imbalan dalam bentuk lain. Pengusaha adalah orang perseorangan, persekutuan atau badan hukum yang menjalankan suatu perusahaan milik sendiri."
+
+    doc = nlp(s.lower())
+    # print(doc.sentences)
+
+    for word in doc.sentences[1].words:
+        print(word.text, word.upos)
+    
+    words = [word.text for word in doc.sentences[1].words]
+    bigrams = [
+        bigram for bigram in list(ngrams(words, 2))
+        if bigram[0] not in string.punctuation and bigram[1] not in string.punctuation
+    ]
+    print(bigrams)
+    grammar = "NP: {<NOUN|PROPN>+ <ADJ>*}"
+    parser = nltk.RegexpParser(grammar)
+    word_pos_pairs = [(word.text, word.upos) for word in doc.sentences[0].words]
+    tree = parser.parse(word_pos_pairs)
+    print(tree)
+
+    keywords = []
+    for subtree in tree.subtrees():
+        if subtree.label() == 'NP' and len(subtree.leaves()) >= 1:
+            words = [item[0] for item in subtree.leaves()]
+            keywords.append(' '.join(words))
+                
+    print(keywords)
+
+
+    text = """
+                                    UNDANG-UNDANG REPUBLIK INDONESIA
+                                            NOMOR 13 TAHUN 2003
+                                                TENTANG
+                                            KETENAGAKERJAAN
+
+                                    DENGAN RAHMAT TUHAN YANG MAHA ESA
+
+                                        PRESIDEN REPUBLIK INDONESIA,
+
+            Menimbang:
+            a.   bahwa pembangunan nasional dilaksanakan dalam rangka pembangunan manusia
+                Indonesia seutuhnya dan pembangunan masyarakat Indonesia seluruhnya untuk
+                mewujudkan masyarakat yang sejahtera, adil, makmur, yang merata, baik materiil maupun
+                spiritual berdasarkan Pancasila dan Undang-Undang Dasar Negara Republik Indonesia
+                Tahun 1945;
+            b.   bahwa dalam pelaksanaan pembangunan nasional, tenaga kerja mempunyai peranan dan
+                kedudukan yang sangat penting sebagai pelaku dan tujuan pembangunan;
+            c.   bahwa sesuai dengan peranan dan kedudukan tenaga kerja, diperlukan pembangunan
+                ketenagakerjaan untuk meningkatkan kualitas tenaga kerja dan 
+            """
+    print(len(text.split()))
+    doc = nlp(text.lower())    
+    # create word and POS tag pair
+    pairs = []
+    for sentence in doc.sentences:
+        tagged = []
+        for word in sentence.words:
+            tagged.append((word.text, word.upos))
+        pairs.append(tagged)
+        
+    keywords = []
+    for sentence in pairs:
+        parse_tree = parser.parse(sentence)
+        for subtree in parse_tree.subtrees():
+            if subtree.label() == 'NP' and len(subtree.leaves()) >= 2:  # only consider bigram
+                words = [item[0] for item in subtree.leaves()]
+                keywords.append(' '.join(words))
+    print(keywords[:20])
+    print(len(keywords))
+    freq = Counter(keywords)
+    print("Freq: ", freq)
+    print("Most Common: ", freq.most_common(50))
+    
+
+def huggingFacePipelineTransformer():
+    from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+    from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+    from transformers import pipeline
+    from transformers import AutoTokenizer, AutoModelForSequenceClassification
+    # print(type(news))
+    # Replace 'indobenchmark/indonlu-lite-base' with the actual path to the model if needed
+    model_name = 'indobenchmark/indonlu-lite-base'
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(model_name)
+
+    # Example text
+    text = "aku sayang kamu"
+
+    # Tokenize and predict sentiment
+    inputs = tokenizer(text, return_tensors="pt")
+    outputs = model(**inputs)
+    logits = outputs.logits
+    predicted_class = logits.argmax().item()
+
+    # Print the predicted class
+    print(predicted_class)
+
+def sentimentTextBlob(text):
+    # text = "Aku sayang kamu"
+    from textblob import TextBlob
+    try:
+        analysis = TextBlob(text)
+        if analysis.sentiment.polarity > 0:
+            return 'Positif'
+        elif analysis.sentiment.polarity == 0:
+            return 'Netral'
+        else:
+            return 'Negatif'
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return 'Error'
+
+# Testing
+# text = "Saya sangat senang hati dengan kemajuan teknologi terbaru."
+# result = sentimentTextBlob(text)
+# print(f"Sentiment: {result}")
+import nltk
+from nltk.sentiment.util import *
+from nltk.sentiment import SentimentIntensityAnalyzer
+import pandas as pd
+def nltkVader():
+
+    # Inisialisasi SentimentIntensityAnalyzer
+    nltk.download('vader_lexicon') 
+    sia = SentimentIntensityAnalyzer()
+
+    # Contoh paragraf
+    text = "Aku sayang kamu"
+
+    # Menghitung sentimen pada setiap kata dalam paragraf
+    words = text.split()
+    print(words)
+    scores = [sia.polarity_scores(word) for word in words]
+    print(scores)
+
+    # Menghitung rata-rata sentimen
+    score_df = pd.DataFrame(scores)
+    print(score_df.head())
+    avg_score = score_df['compound'].mean()
+
+    # Menentukan sentimen pada paragraf
+    print(avg_score)
+    if avg_score > 0.05:
+        sentiment = "Positif"
+    elif avg_score < -0.05:
+        sentiment = "Negatif"
+    else:
+        sentiment = "Netral"
+
+    print("Paragraf: ", text)
+    print("Sentiment: ", sentiment)
+
+def torchTensi():
+    from transformers import pipeline
+
+    # Load sentiment analysis pipeline for Indonesian
+    sentiment_pipeline = pipeline('sentiment-analysis', model="indobenchmark/indonlu-lite-base")
+
+    # Example text for analysis
+    text = "Saya senang sekali dengan produk ini. Kualitasnya sangat baik!"
+
+    # Perform sentiment analysis
+    result = sentiment_pipeline(text)
+
+    # Display the result
+    print(result)
+
+def transformerBERT():
+    from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+    from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+    from transformers import pipeline
+    # from transformers import AutoTokenizer, AutoModelForSequenceClassification
+    print("=====Transformers BERT=====")
+
+    # Contoh teks berita dalam Bahasa Indonesia
+    teks_berita_id = "Saya senang sekali dengan produk ini. Kualitasnya sangat baik!"
+
+    # Menghilangkan stop words
+    stopword_factory = StopWordRemoverFactory()
+    stopword_remover = stopword_factory.create_stop_word_remover()
+    teks_berita_id = stopword_remover.remove(teks_berita_id)
+
+    # Stemming kata-kata
+    stemmer_factory = StemmerFactory()
+    stemmer = stemmer_factory.create_stemmer()
+    teks_berita_id = stemmer.stem(teks_berita_id)
+    
+    sentimen_analyzer = pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment')
+
+    # Analisis sentimen
+    hasil_sentimen = sentimen_analyzer(teks_berita_id)
+
+    # Menampilkan hasil
+    print("Teks Berita (Bahasa Indonesia):", teks_berita_id)
+    print("Sentimen:", hasil_sentimen[0]['label'], "(Skor:", hasil_sentimen[0]['score'], ")")
+    if hasil_sentimen[0]['label'] == "4 start" or hasil_sentimen[0]['label'] == "5 stars":
+        sentimen = "positif"
+    elif hasil_sentimen[0]['label'] == "3 stars":
+        sentimen = "netral"
+    else:
+        sentimen = "negatif"
+
+    print(sentimen)
+
+def sklearnSentiment():
+    import torch
+    from transformers import BertTokenizer, BertForSequenceClassification
+
+    # Inisialisasi model dan tokenizer
+    model = BertForSequenceClassification.from_pretrained("indonesian-emotion")
+    tokenizer = BertTokenizer.from_pretrained("indonesian-emotion")
+
+    # Teks yang akan dianalisis
+    text = "Contoh paragraf bahasa Indonesia yang akan dianalisis untuk mengidentifikasi emosi yang dihasilkan oleh teks tersebut."
+
+    # Tokenize teks
+    encoded_input = tokenizer(text, return_tensors='pt')
+
+    # Prediksi emosi
+    output = model(**encoded_input)
+
+    # Ekstrak nilai probabilities dari hasil prediksi
+    probs = torch.nn.functional.softmax(output.logits, dim=-1)
+
+    # Tampilkan hasil analisis
+    for idx, label in enumerate(model.config.id2label):
+        print(f"{label}: {probs.numpy()[0][idx]:.2f}")
+
+def roberta():
+    start_time = time.time()
+    from transformers import pipeline
+
+    pretrained_name = "w11wo/indonesian-roberta-base-sentiment-classifier"
+
+    nlp = pipeline(
+        "sentiment-analysis",
+        model=pretrained_name,
+        tokenizer=pretrained_name
+    )
+
+    text = "PT Bank Mandiri (Persero) Tbk. menjadi salah satu lembaga perbankan yang menjalankan program kredit usaha rakyat (KUR). Bank Mandiri berhasil menyalurkan KUR kepada lebih dari 195 ribu debitur dengan nilai Rp 20,52 triliun hingga akhir Agustus 2023. KUR Mandiri menyasar debitur pemilik usaha mikro, kecil, dan menengah (UMKM), UMKM dari anggota keluarga dari karyawan yang berpenghasilan tetap, Pekerja Migran Indonesia (PMI) atau Tenaga Kerja Indonesia (TKI), hingga calon peserta magang di luar negeri. Cara Transfer Mandiri ke DANA Lewat Livin' by Mandiri, ATM, dan Internet BankingLantas, bagaimana skema pembiayaan KUR Mandiri 2023 dan persyaratannya? Berikut persyaratannya seperti dikutip dari situs Bank Mandiri:Syarat KUR Mandiri 2023KUR Mandiri dibedakan menjadi lima jenis, yaitu KUR Super Mikro, KUR Mikro, KUR Kecil, KUR TKI, dan KUR Khusus. Penyaluran KUR diprioritaskan pada sektor produksi, seperti pertanian, kehutanan, dan perburuan, kelautan dan perikanan, industri pengolahan, konstruksi, pertambangan garam rakyat, pariwisata, serta jasa produksi. Terkini: Setelah Beroperasi Sejak 1968 Citibank Tutup Layanan Consumer Banking, Buruh Mogok Nasional 2 Hari Tuntut Kenaikan UMP 15 PersenBerikut persyaratan KUR Mandiri berdasarkan jenisnya periode sampai dengan 31 Desember 2023: 1. KUR Super Mikro- Calon debitur berusia minimal 21 tahun atau sudah menikah.- Limit kredit sampai dengan Rp 10 juta.- Jangka waktu pelunasan Kredit Modal Kerja (KMK) maksimal 3 tahun dan Kredit Investasi (KI) maksimal 5 tahun.- Suku bunga 3 persen efektif per tahun.- Agunan pokok berupa usaha atau objek yang dibiayai.- Syarat KUR Mandiri 2023 Super Mikro tidak diberlakukan agunan tambahan.- Calon debitur dimungkinkan bagi usaha kurang dari 6 bulan, tetapi harus memenuhi salah satu syarat, antara lain mengikuti pendampingan, pelatihan kewirausahaan atau pelatihan lainnya, tergabung dalam kelompok usaha, maupun mempunyai anggota keluarga yang sudah memiliki usaha produktif dan layak.- Tidak dibatasi dengan total akumulasi plafon per debitur"
+
+    print(f"Text: {text}")
+    print(f"Sentiment: {nlp(text)}")
+    end_time = time.time()
+    print(f"total waktu: {end_time - start_time}")
+
+def mdughol():
+    start_time = time.time()
+    print(f"[{time.time()}] Initialize")
+    from transformers import pipeline
+    from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
+    pretrained= "mdhugol/indonesia-bert-sentiment-classification"
+
+    model = AutoModelForSequenceClassification.from_pretrained(pretrained)
+    tokenizer = AutoTokenizer.from_pretrained(pretrained)
+
+    sentiment_analysis = pipeline("sentiment-analysis", model=model, tokenizer=tokenizer)
+
+    label_index = {'LABEL_0': 'positive', 'LABEL_1': 'neutral', 'LABEL_2': 'negative'}
+
+    print(f"[{time.time()}] Declare")
+    pos_text = "Sangat bahagia hari ini"
+    neg_text = "Dasar anak sialan!! Kurang ajar!!"
+
+    print(f"[{time.time()}] Output 1")
+    result = sentiment_analysis(pos_text)
+    status = label_index[result[0]['label']]
+    score = result[0]['score']
+    print(f'Text: {pos_text} | Label : {status} ({score * 100:.3f}%)')
+
+    print(f"[{time.time()}] Output 2")
+    result = sentiment_analysis(neg_text)
+    status = label_index[result[0]['label']]
+    score = result[0]['score']
+    print(f'Text: {neg_text} | Label : {status} ({score * 100:.3f}%)')
+    end_time = time.time()
+    print(f"total waktu: {end_time - start_time}")
+
+roberta()
+
+#* TextBlob tanda baca dihilangkan, imbuhan dihilangkan, text di-lower
+#* Spacy Tidak, melakukan tetap melakukan, di TextBlob jadi laku, di spacy koma dan titik tetap ada, di textblob hilang
