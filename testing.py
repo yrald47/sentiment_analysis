@@ -48,12 +48,6 @@ def ScrapingRequest():
     except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
 
-# Contoh string JSON yang berisi pola regex
-# json_string = '{"regex_pattern": "\\d{1,2}/\\d{1,2}/\\d{4}"}'
-
-# # Mendapatkan pola regex dari JSON
-# json_data = json.loads(json_string)
-# regex_pattern = json_data["regex_pattern"]
 def findDateRegexinSentence():
     kalimat = "Ini adalah tanggal 08/12/2023 dan juga 8/12/2023, serta 8 Februari 2023."
     regex_pattern = "\\d{1,2}/\\d{1,2}/\\d{4}"
@@ -68,9 +62,6 @@ def findDateRegexinSentence():
     for tgl in tanggal:
         print(tgl)
 
-# for lang in locale.windows_locale.values():
-#     print(lang)
-
 def convertDate():
     loc = locale.getlocale()
     print(loc)
@@ -83,33 +74,6 @@ def convertDate():
     tanggal_hasil3 = tanggal_objek3.strftime("%Y-%m-%d")
 
     print(tanggal_hasil3)
-
-# text = "https://cnnindonesia.co.id/longtext/12424/lkjasdf-lasdkjfsa-lksdkf/"
-# print(text.find("/"))
-
-# xs = ["div", "article", "div", "div"]
-# for idx, x in enumerate(xs):
-#     print(idx, x)
-
-# exit()
-
-## TESTING XPATH AND FIND TAG DETIK FOTO SLIDER
-
-# url = "https://finance.detik.com/foto-bisnis/d-6976432/indonesia-knowledge-forum-2023-bahas-perekonomian-indonesia/1"
-# url = "https://video.tempo.co/read/6460/aksi-ganjal-atm-gunakan-tusuk-gigi-terekam-kamera-cctv"
-# url = "https://video.tempo.co/read/6460/aksi-ganjal-atm-gunakan-tusuk-gigi-terekam-kamera-cctv"
-# url = "https://finance.detik.com/foto-bisnis/d-6976432/indonesia-knowledge-forum-2023-bahas-perekonomian-indonesia"
-# url = "https://www.detik.com/search/searchall?query=bca&siteid=2"
-# url = "https://umkm.kompas.com/read/2023/10/26/113538883/ace-ys-2023-libatkan-generasi-muda-bangun-industri-kreatif-dan-digital-di-asia"
-
-
-# req = Request(url=url, headers={'User-Agent': 'Mozilla/5.0'})
-# news_search = urllib2.urlopen(req).read()
-# parsed2 = BeautifulSoup(news_search, "lxml")
-# b = parsed2.find("article", "detail-artikel").find_all("div", "detail-in")
-# print(len(b))
-# for i in b:
-#     print(i.get_text())
 
 def xpath():
     url = "https://foto.tempo.co/read/21815/diduga-bunuh-diri-seorang-pria-jatuh-dari-lantai-56"
@@ -129,6 +93,7 @@ def xpath():
         # print(i.split(',')[1].split('WIB')[0].strip())
         print(i)
         # scraping_date = datetime.datetime.strptime("08 Nov 2023", "%Y-%m-%d")
+
 def dateFormat():
     from datetime import datetime
 
@@ -147,19 +112,6 @@ def dateFormat():
 
     print(tanggal_hasil)
     print(tanggal_hasil2)
-
-# WRITE LXML SITE
-# url = "https://finance.detik.com/foto-bisnis/d-6976432/indonesia-knowledge-forum-2023-bahas-perekonomian-indonesia"
-
-# req = Request(url=url, headers={'User-Agent': 'Mozilla/5.0'})
-# news_search = urllib2.urlopen(req).read()
-# parsed2 = BeautifulSoup(news_search, "lxml")
-# with open('video_tempo.lxml', 'w', encoding="utf-8") as f:
-#     f.write(str(parsed2))
-
-# b = parsed2.find("div", {"id": "slider-foto__detail"}).find_all("figcaption", "mgt-16")
-# for i in b:
-#     print(i.get_text())
 
 def dateKompasVideo():
     req = Request(url='https://video.kompas.com/watch/872082/kasus-uang-di-rekening-raib-pin-atm-dibobol-pasangan-sendiri', headers={'User-Agent': 'Mozilla/5.0'})
@@ -427,6 +379,7 @@ def texblobBard2():
         print("Sentimen: Negatif")
     else:
         print("Sentimen: Netral")
+
 def islLexicon():
     import json
     import requests
@@ -620,7 +573,6 @@ def sentimentBagas():
     print("Freq: ", freq)
     print("Most Common: ", freq.most_common(50))
     
-
 def huggingFacePipelineTransformer():
     from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
     from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
@@ -659,14 +611,11 @@ def sentimentTextBlob(text):
         print(f"An error occurred: {e}")
         return 'Error'
 
-# Testing
-# text = "Saya sangat senang hati dengan kemajuan teknologi terbaru."
-# result = sentimentTextBlob(text)
-# print(f"Sentiment: {result}")
 import nltk
 from nltk.sentiment.util import *
 from nltk.sentiment import SentimentIntensityAnalyzer
 import pandas as pd
+
 def nltkVader():
 
     # Inisialisasi SentimentIntensityAnalyzer
@@ -827,7 +776,60 @@ def mdughol():
     end_time = time.time()
     print(f"total waktu: {end_time - start_time}")
 
-roberta()
+def scikitLearnTFIDF():
+    from sklearn.feature_extraction.text import TfidfVectorizer
 
+    # Contoh dokumen
+    documents = [
+        "Ini adalah contoh dokumen pertama.",
+        "Dokumen kedua berisi beberapa kata yang serupa.",
+        "Dokumen ketiga adalah dokumen terakhir dalam contoh ini."
+    ]
+
+    # Menggunakan TfidfVectorizer untuk menghitung skor TF-IDF
+    vectorizer = TfidfVectorizer()
+    tfidf_matrix = vectorizer.fit_transform(documents)
+
+    # Mendapatkan daftar term (kata) yang digunakan sebagai fitur
+    terms = vectorizer.get_feature_names_out()
+
+    # Mendapatkan matriks TF-IDF sebagai representasi dokumen
+    tfidf_values = tfidf_matrix.toarray()
+
+    # Menampilkan hasil
+    for i, doc in enumerate(documents):
+        print(f"\nDokumen {i + 1}: {doc}")
+        for j, term in enumerate(terms):
+            print(f"{term}: {tfidf_values[i][j]}")
+
+
+def pisahPerKalimat():
+    import pprint
+    from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+    from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+    from transformers import pipeline
+
+    news = 'PT Bank Central Asia Tbk (BCA) mengawasi pembukaan rekening nasabah, terutama yang berkaitan dengan judi online sesuai ketentuan hukum yang berlaku. EVP Corporate Communication & Social Responsibility BCA Hera F. Haryn mengatakan, pihaknya tidak memfasilitasi aktivitas judi online dalam bentuk apa pun. "Akan melakukan pemblokiran rekening nasabah yang digunakan dalam aktivitas judi online," kata dia kepada Kompas.com, Kamis (12/10/2023).Ia menambahkan, pemblokiran rekening itu akan dilakukan dengan memperhatikan ketentuan hukum yang berlaku. Selain itu, BCA juga akan terus mendukung pemberantasan judi online. "BCA senantiasa mendukung upaya aparat penegak hukum dalam memberantas judi online," imbuh dia.Sebelumnya, Otoritas Jasa Keuangan (OJK) mengatakan pelaku judi online mengincar rekening nasabah perbankan untuk menampung uang transaksi judi online. Caranya dengan membeli rekening tersebut. Kepala Eksekutif Pengawas Perilaku Pelaku Usaha Jasa Keuangan, Edukasi, dan Pelindungan Konsumen OJK Friderica Widyasari Dewi mengatakan, rekening yang diincar merupakan milik nasabah yang kurang mengerti dampak dari penjualan rekening tersebut. "Misalnya dia buka rekening, nanti rekening ATM itu dibeli sama orang, dulu Rp 500.000 sekarang Rp 5 juta," kata dia saat ditemui di acara Edukasi kepada komunitas Perempuan/Ibu dalam acara SICANTIKS, Selasa (10/10/2023). Kiki menjelaskan, rekening yang disasar biasanya merupakan rekening yang berasal dari bank-bank besar. Ia menambahkan, masyarakat kadang kurang memahami apa saja dampak yang akan terjadi jika menjual rekening dengan namanya tersebut. "Dia (masyarakat) tidak tahu konsekuensinya gede banget," kata dia'
+
+    pretrained_name = "w11wo/indonesian-roberta-base-sentiment-classifier"
+    # pretrained_name = "intanm/indonesian_financial_sentiment_analysis_10"
+
+    nlp = pipeline(
+        "sentiment-analysis",
+        model=pretrained_name,
+        tokenizer=pretrained_name
+    )
+    for i, sentence in enumerate(news.split('. ')):
+        stopword_factory = StopWordRemoverFactory()
+        stopword_remover = stopword_factory.create_stop_word_remover()
+        news = stopword_remover.remove(sentence)
+
+        stemmer_factory = StemmerFactory()
+        stemmer = stemmer_factory.create_stemmer()
+        sentence = stemmer.stem(sentence)
+        print(f"{i + 1}: {sentence}")
+        print(f"Sentiment: {nlp(sentence)}")
+
+sentimentBagas()
 #* TextBlob tanda baca dihilangkan, imbuhan dihilangkan, text di-lower
 #* Spacy Tidak, melakukan tetap melakukan, di TextBlob jadi laku, di spacy koma dan titik tetap ada, di textblob hilang

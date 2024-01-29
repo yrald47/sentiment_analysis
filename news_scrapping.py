@@ -19,6 +19,32 @@ from transformers import pipeline
 # from nltk.corpus import stopwords
 # from nltk.tokenize import word_tokenize
 # import sys
+def sentiment_scoring_long(text):
+    from transformers import AutoTokenizer, AutoModelForSequenceClassification
+    import torch
+
+    pretrained_name = "intanm/indonesian_financial_sentiment_analysis_10"
+
+    # Load tokenizer and model
+    tokenizer = AutoTokenizer.from_pretrained(pretrained_name)
+    model = AutoModelForSequenceClassification.from_pretrained(pretrained_name)
+    tokens = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512)
+    # Forward pass through the model
+    outputs = model(**tokens)
+
+    return outputs
+
+def sentiment_scoring(text):
+    # pretrained_name = "w11wo/indonesian-roberta-base-sentiment-classifier"
+    pretrained_name = "intanm/indonesian_financial_sentiment_analysis_10"
+
+    nlp = pipeline(
+        "sentiment-analysis",
+        model=pretrained_name,
+        tokenizer=pretrained_name
+    )
+    print(type(nlp(text)))
+    return nlp(text)
 
 def sentiment_score(news):
     # print(type(news))
@@ -110,7 +136,7 @@ def getContent(link, content_tag, content_class, paragraph_tag, paragraph_class,
         for paragraph in paragraphs:
             # print("PARAGRAPH LEN: " + str(len(paragraph)))
             if paragraph.get_text().find('Baca Juga:') == -1 and paragraph.get_text().find('Baca juga:') == -1 and paragraph.get_text().find('Pilihan Editor:') == -1:
-                context += paragraph.get_text()
+                context += ' '+paragraph.get_text()
 
         # print("===CONTEXT===")
         # print(context.encode('utf-8'))

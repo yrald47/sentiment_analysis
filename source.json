@@ -23,8 +23,8 @@
       "link": "https://www.tempo.co/tag/",
       "search_link": "https://www.tempo.co/search?waktu=1hari&kanal=&subkanal=&domain=&q=keyword_to_replace",
       "keyword_concat": "+",
-      "each_result_tag": "article",
-      "each_result_class": "text-card",
+      "each_result_tag": "h2",
+      "each_result_class": "title",
       "each_result_link_class": "",
       "content_tag": ["div", "div", "article", "article"],
       "content_class": [

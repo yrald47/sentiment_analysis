@@ -1,7 +1,7 @@
 import json
 import config
 import news_scrapping
-from news_scrapping import sentiment_score
+from news_scrapping import sentiment_score, sentiment_scoring
 import sys
 import pytz
 from datetime import datetime, timedelta
@@ -15,8 +15,8 @@ def scrape_portal(portals):
     portal_name = portals['name']
     header = "\nScraping News From " + portal_name
     print('='*len(header) + '\n' + header + '\n' + '='*len(header))
-    
     keyword = sys.argv[2].replace(' ', portals['keyword_concat'])
+    instance = sys.argv[3]
     timezone = pytz.timezone('Asia/Jakarta')
     today = datetime.now(timezone).date()
     a_week_before = today - timedelta(weeks=1)
@@ -60,27 +60,30 @@ def scrape_portal(portals):
             if link.find(text) >= 0:
                 scrap = False
                 break
+        
         print("SCRAP: " + str(scrap))
         if scrap == True:
             result = news_scrapping.getContent(link, content_tag, content_class, paragraph_tag, paragraph_class, news_date_tag, news_date_class, datetime_regex, date_format)
             print("Scraping at: " + str(scraping_date))
+            news = re.sub(r'.* -\s', '', result['content'].decode('utf-8'))
+            news = re.sub(r'\s', ' ', news)
+            print(f"RESULTS: {news}")
             # print("RESULTS: " + str(result))
 
-            news = re.sub(r'.* -\s', '', result['content'].decode('utf-8'))
-            # print("News Type", type(news))
-            sentiment = sentiment_score(str(news))
+            sentiment = sentiment_scoring(str(news)[:512])
             print("Sentiment: ", sentiment, " (", type(sentiment) , ")")
+            # print(sentiment[0]['label'])
             # with open('news_content.txt', 'a', encoding="utf-8") as f:
             #     f.write(str(result['content'].decode('utf-8')) + "\n\n")
-            # collection = config.db['news']
-            # scrapped_news = {"keyword": sys.argv[2], "source": portal_name, "scraping_date": scraping_date, "link": link, "title": result['title'], "news_date": result['news_date'], "content": re.sub(r'.* -\s', '', result['content'].decode('utf-8')), "error": result['error'].decode('utf-8')}
-            # x = collection.insert_one(scrapped_news)
+            collection = config.db['news']
+            scrapped_news = {"keyword": sys.argv[2], "source": portal_name, "instance": instance, "scraping_date": scraping_date, "link": link, "title": result['title'], "news_date": result['news_date'], "content": re.sub(r'.* -\s', '', result['content'].decode('utf-8')), "sentiment": sentiment[0]['label'], "error": result['error'].decode('utf-8')}
+            x = collection.insert_one(scrapped_news)
         print("===============")
         # exit()
 
 if __name__ == "__main__":
     start_time = time.time()
-    if len(sys.argv) == 3 and sys.argv[1] == '-t':
+    if len(sys.argv) == 4 and sys.argv[1] == '-ti':
         print("Start Scraping with Keyword: " + sys.argv[2])
 
         threads = []
